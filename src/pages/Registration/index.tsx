@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { auth, firestore } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
-const Register: React.FC = () => {
+import { auth, firestore } from "../../firebase";
+
+const Registration: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -46,4 +47,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default Registration;
