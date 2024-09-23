@@ -39,26 +39,39 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>{user ? `Welcome, ${user.email}` : "Login"}</h2>
+    <div className="flex flex-col justify-center gap-6 min-h-screen">
       {!user ? (
-        <div>
+        <div className="flex flex-col justify-center w-72 space-y-4 mx-auto my-auto bg-cyan-500 p-4 rounded-xl">
+          <h2 className="text-center font-bold text-black">
+            {user ? `Welcome, ${user.email}` : "Prattle Login"}
+          </h2>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
+            className="input input-bordered w-full max-w-xs"
           />
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            className="input input-bordered w-full max-w-xs"
           />
-          <button onClick={handleLogin}>Login</button>
+          <button onClick={handleLogin} className="btn btn-active btn-primary">
+            Login
+          </button>
         </div>
       ) : (
-        <button onClick={handleLogout}>Logout</button>
+        <div className="flex flex-col justify-center w-72 space-y-4 mx-auto my-auto bg-cyan-500 p-4 rounded-xl">
+          <h2 className="text-center font-bold text-black">
+            {user ? `Welcome, ${user.email}` : "Prattle Login"}
+          </h2>
+          <button onClick={handleLogout} className="btn btn-active btn-primary">
+            Logout
+          </button>
+        </div>
       )}
     </div>
   );

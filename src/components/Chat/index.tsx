@@ -66,12 +66,18 @@ const ChatRoom: React.FC = () => {
           </div>
         ))}
       </div>
-      <input
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-        placeholder="Type a message..."
-      />
-      <button onClick={sendMessage}>Send</button>
+      <div className="flex justify-center gap-4">
+        <input
+          type="text"
+          className="input input-bordered w-full max-w-xs"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Type a message..."
+        />
+        <button className="btn" onClick={sendMessage}>
+          Send
+        </button>
+      </div>
     </div>
   );
 };
