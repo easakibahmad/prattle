@@ -20,6 +20,8 @@ const ChatRoom: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
 
+  const user = auth.currentUser;
+
   useEffect(() => {
     const messagesQuery = query(
       collection(firestore, "messages"),
@@ -58,10 +60,10 @@ const ChatRoom: React.FC = () => {
 
   return (
     <div>
-      <div className="messages">
+      <div className="messages mb-6">
         {messages.map((msg) => (
-          <div key={msg.id}>
-            <strong>{msg.uid}: </strong>
+          <div className="bg-white text-black p-2 my-2 rounded-xl" key={msg.id}>
+            <strong className="mr-2">{user?.email}: </strong>
             {msg.text}
           </div>
         ))}

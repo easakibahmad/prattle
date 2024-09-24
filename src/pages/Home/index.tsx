@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { auth } from "../../firebase";
 
 import ChatRoom from "../../components/Chat";
+import UserList from "../../components/UserList";
+import PrivateChat from "../../components/PrivateChat";
 
 const Prattle = () => {
-  const user = auth.currentUser;
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
-  console.log("user", user);
+  const handleUserSelect = (user: { uid: string }) => {
+    setSelectedUser(user.uid);
+  };
 
   return (
-    <div className="py-10">
-      <h1 className="text-3xl font-bold text-center">Prattle</h1>
-      <div className="flex justify-center mt-6">
-        <ChatRoom />
-      </div>
+    <div className="py-10 bg-white text-black min-h-screen">
+      {auth.currentUser ? (
+        <>
+          {!selectedUser ? (
+            <UserList onUserSelect={handleUserSelect} />
+          ) : (
+            <PrivateChat otherUserId={selectedUser} />
+          )}
+        </>
+      ) : (
+        <>
+          {/* <h1 className="text-3xl font-bold text-center">Prattle</h1>
+          <div className="flex justify-center mt-6">
+            <ChatRoom />
+          </div> */}
+        </>
+      )}
     </div>
   );
 };
