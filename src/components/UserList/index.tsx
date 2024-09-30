@@ -26,7 +26,7 @@ const UserList: React.FC<{ onUserSelect: (user: User) => void }> = ({
   }, []);
 
   return (
-    <div>
+    <div className="w-50 mx-auto">
       <h2>User List</h2>
       <ul>
         {users.map((user) => (

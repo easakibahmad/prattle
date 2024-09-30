@@ -9,7 +9,7 @@ import {
 import { firestore, auth } from "../../firebase";
 
 interface PrivateChatProps {
-  otherUserId: string;
+  otherUserId: string | null;
 }
 
 interface Message {
@@ -26,7 +26,7 @@ const PrivateChat: React.FC<PrivateChatProps> = ({ otherUserId }) => {
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId || !otherUserId) return;
 
     const conversationId = [userId, otherUserId].sort().join("_");
 
@@ -66,22 +66,45 @@ const PrivateChat: React.FC<PrivateChatProps> = ({ otherUserId }) => {
     setNewMessage("");
   };
 
+  // Debugging
+  console.log("User ID:", userId);
+  console.log("Messages:", messages);
+
   return (
-    <div>
-      <div>
+    <div className="w-96 mx-auto p-4 bg-gray-200 rounded-lg">
+      <div className="chat-container mb-4">
         {messages.map((msg) => (
-          <div key={msg.id}>
+          <div
+            key={msg.id}
+            className={`chat-message mb-2 p-2 rounded-lg ${
+              msg.senderId === userId
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300 text-black"
+            }`}
+            style={{
+              alignSelf: msg.senderId === userId ? "flex-end" : "flex-start",
+              maxWidth: "70%",
+            }}
+          >
             <strong>{msg.senderId === userId ? "You" : "Other"}:</strong>{" "}
             {msg.text}
           </div>
         ))}
       </div>
-      <input
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-        placeholder="Type a message..."
-      />
-      <button onClick={sendMessage}>Send</button>
+      <div className="flex space-x-2">
+        <input
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Type a message..."
+          className="input input-bordered w-full max-w-xs bg-white rounded-lg p-2"
+        />
+        <button
+          onClick={sendMessage}
+          className="btn bg-blue-500 text-white px-4 rounded-lg"
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 };
